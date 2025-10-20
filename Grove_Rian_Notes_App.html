@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Notes App</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .note-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container mt-5">
+        <h1 class="mb-4 text-center">My Notes</h1>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" v-model="newNoteText" @keyup.enter="addNote" placeholder="Enter your note here...">
+            <button class="btn btn-primary" @click="addNote">Add Note</button>
+        </div>
+
+        <ul class="list-unstyled">
+            <li v-for="(note, index) in notes" :key="index" class="note-item bg-light">
+                <span>{{ note }}</span>
+                <button class="btn btn-danger btn-sm" @click="deleteNote(index)">Delete</button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Vue.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                newNoteText: '',
+                notes: []
+            },
+            methods: {
+                addNote() {
+                    if (this.newNoteText.trim() !== '') {
+                        this.notes.push(this.newNoteText.trim());
+                        this.newNoteText = '';
+                    }
+                },
+                deleteNote(index) {
+                    this.notes.splice(index, 1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
